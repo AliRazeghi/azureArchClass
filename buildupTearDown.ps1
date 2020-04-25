@@ -13,11 +13,15 @@ This process will begin recreating the back office for you.  It will go through:
 -Make sure machines are joined to domain
 
 Green reply = Good
+Yellow reply = Good, but an action is needed and is being performed.
 Dark Red Reply = Bad
 ########################################################################################################################
 ########################################################################################################################
 ########################################################################################################################
 " -ForegroundColor Cyan  
+
+
+## Changes: Added subnetaddressprefix variable. Basic clean up. 
 ########################################################################################
 
 
@@ -32,7 +36,7 @@ $vnetRGLoc = $vnetLoc  ## Company Policy: All VNets must be in the same location
 $vnetName = 'PacktLBVnet'
 $vnetAddressPrefix = '172.16.0.0/16'
 $subnetName = 'PacktLBBackendSubnet'
-
+$subnetAddressPrefix = '172.16.0.0/24'
 ## Load Balancers
 $LBName = $vnetRGName
 $LBLocation = $vnetLoc
@@ -97,7 +101,7 @@ else {
 write-host "Subnet $($subnetName) does not exist.  Creating Subnet" -ForegroundColor Yellow
   $subnetConfig = Add-AzVirtualNetworkSubnetConfig `
   -Name $($subnetName) `
-  -AddressPrefix 172.16.0.0/24 `
+  -AddressPrefix $($subnetAddressPrefix ) `
   -VirtualNetwork $virtualNetwork
   }
 

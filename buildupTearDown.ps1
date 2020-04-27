@@ -70,7 +70,7 @@ write-verbose "doesvnetRGExist Variable Value: $($doesvnetRGExist)"
 if ($doesvnetRGExist) {write-host "RG: $($doesvnetRGExist.ResourceGroupName) exists. Not creating RG $($DoesVNetRGExist.ResourceGroupName). Reusing Old one." -ForegroundColor Green} 
 else {
 write-host "creataing RG: $($vnetRGName) in $($vnetLoc)" -ForegroundColor Green
-New-AzResourceGroup -Name $($vnetRGName) -Location $($vnetLoc)
+New-AzResourceGroup -Name $($vnetRGName) -Location $($vnetLoc) | 
 }
 
 

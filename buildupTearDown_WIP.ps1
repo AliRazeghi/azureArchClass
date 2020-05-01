@@ -49,7 +49,7 @@ $LBfrontendIP = '172.16.0.7'
 $LBProbeName = 'PacktHealthProbe'
 $LBProbePort = '80'
 $LBProbePath =  '/.'
-$LBProbebProtocol = 'HTTP'
+$LBProbeProtocol = 'HTTP'
 $LBProbeInterval = '15'        ##Number of seconds between attempts
 $LBProbeCount = '2'  ##How many times must it fail to be unhealthy?
 ##Rules for LBs
@@ -161,7 +161,6 @@ New-AzAvailabilitySet @splat | out-null
 
 
 
-<#
 
 ## Does vm exist?
 $doesVMExist = get-azvm -Name $($VM1Name) 
@@ -233,7 +232,7 @@ xx Health Checks
 xxxx LB Rules
 
 add ips to the backend pools or tie to a nic of our 2 machines.
-#>
+
 
 if ($doesLBExist){write-host "LB $($LBName) exists. Removing." -ForegroundColor Green; Remove-AzLoadBalancer -Name PacktLoadBalancer -ResourceGroupName PacktLoadBalancer -force}
 
@@ -261,18 +260,24 @@ else {write-host "creating LB $($LBName)" -ForegroundColor Yellow; New-AzLoadBal
 Get-AzLoadBalancer -Name "$($LBName)" -ResourceGroupName "$($LBRG)" | Add-AzLoadBalancerBackendAddressPoolConfig -Name 'PacktLBBackendPool'| Set-AzLoadBalancer
 
 
+
+
+
 ##Load Balancer Probe
-$slb = Get-AzLoadBalancer -Name $($LBName) -ResourceGroupName ($LBRG)
-$slb | Add-AzLoadBalancerProbeConfig -Name $($LBProbeName) -Protocol $($LBProbebProtocol) -Port $LBProbePort -RequestPath $($LBProbePath) -IntervalInSeconds $($LBProbeInterval)  -ProbeCount $($LBProbeCount) 
-$slb | Set-AzLoadBalancerProbeConfig -Name $($LBProbeName) -Port $LBProbePort -IntervalInSeconds $($LBProbeInterval) -ProbeCount $($LBProbeCount) -Verbose
+$lbprobe = Get-AzLoadBalancer -Name $($LBName) -ResourceGroupName ($LBRG)
+$LBProbe | New-AzLoadBalancerProbeConfig -Name $($LBProbeName) -Protocol $($LBProbeProtocol) -Port $LBBProbePort -IntervalInSeconds $($LBProbeInterval)  -ProbeCount $($LBProbeCount) 
+$lbprobe | Add-AzLoadBalancerProbeConfig -Name $($LBProbeName) -Protocol $($LBProbeProtocol) -Port $LBProbePort -RequestPath $($LBProbePath) -IntervalInSeconds $($LBProbeInterval)  -ProbeCount $($LBProbeCount) 
+$lbprobe | Set-AzLoadBalancerProbeConfig -Name $($LBProbeName) -Port $LBProbePort -IntervalInSeconds $($LBProbeInterval) -ProbeCount $($LBProbeCount) -RequestPath $($LBProbePath) -Protocol $($LBProbeProtocol) -Verbose
 #$slb | AzLoadBalancerProbeConfig
 
 <#
 $slb = Get-AzLoadBalancer -Name $($LBName) -ResourceGroupName ($LBRG)
-$slb | Add-AzLoadBalancerProbeConfig -Name $($LBProbeName) -Protocol $($LBProbebProtocol) -Port $LBProbePort -RequestPath $($LBProbePath) -IntervalInSeconds $($LBProbeInterval)  -ProbeCount $($LBProbeCount) 
+$slb | Add-AzLoadBalancerProbeConfig -Name $($LBProbeName) -Protocol $($LBProbeProtocol) -Port $LBProbePort -RequestPath $($LBProbePath) -IntervalInSeconds $($LBProbeInterval)  -ProbeCount $($LBProbeCount) 
 $slb | Set-AzLoadBalancerProbeConfig -Name $($LBProbeName) -Port $LBProbePort -IntervalInSeconds $($LBProbeInterval) -ProbeCount $($LBProbeCount) 
 #>
 
+
+<#
 ##########Rules
 ##Load Balancer Rules
 # $LBRules = New-AzLoadBalancerRuleConfig -Name PacktLoadBalancerRule -BackendAddressPool PacktLBBackendPool -BackendPort 80 -FrontendIpConfiguration LoadBalancerFrontEnd -FrontendPort 80 -IdleTimeoutInMinutes 4 -Probe PacktHealthProbbe -Protocol TCP
@@ -285,16 +290,13 @@ $azlb | Set-AzLoadBalancerRuleConfig -Name "$($LBRuleName)" -FrontendIPConfigura
 
 
 
+Get-AzLoadBalancer -Name "MyLoadBalancer" -ResourceGroupName "MyResourceGroup"
+$slb | Add-AzLoadBalancerProbeConfig -Name "NewProbe" -Protocol "http" -Port 80 -IntervalInSeconds 15 -ProbeCount 2 -RequestPath "healthcheck.aspx" 
+Set-AzLoadBalancerProbeConfig -Name "NewProbe" -Port 80 -IntervalInSeconds 15 -ProbeCount 2 -loadbalancer '/subscriptions/7753245a-a8af-48a8-b2c8-68c85134798e/resourceGroups/PacktLoadBalancer/providers/Microsoft.Network/loadBalancers/PacktLoadBalancer'
+    
 
 
-
-
-
-
-
-
-
-
+    #>
 
 
 

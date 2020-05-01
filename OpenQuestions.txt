@@ -1,1 +1,7 @@
 why does get-azlb comme up with a 404 error but others don't?
+A: When the resource is recently deleted, we see a 404 error on the GUI (Azure RM). It returns that error under 'copy error'
+
+
+Questions for the interwebs:
+--why does load balancing rules show up in $azlb but not in the gui, and it sticks in $azlb
+--why do my probebs not stick from pshell ut do from the gui and say provisioningstate:successful

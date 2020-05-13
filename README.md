@@ -40,3 +40,5 @@ Find your local number: https://us02web.zoom.us/u/k1YGBPxSp
 PUTTY:
 https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
 
+PGADMIN4:
+https://www.pgadmin.org/download/

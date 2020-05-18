@@ -1,0 +1,21 @@
+quantity in units might goi low
+5 units is lkow
+
+totes is a container (below the water mark and needing replinishment)
+fixed 5 eveywhere
+
+trying to repliunih everything to have 50 total
+
+
+
+
+
+dan advocates multiple stores for replinish query
+Q: Do we want to have each as a diff line or aggregated?
+Q: Do we ant to have a group as 1 virtual item and have the total of all given as the total?
+
+
+
+
+
+

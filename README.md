@@ -42,3 +42,11 @@ https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
 
 PGADMIN4:
 https://www.pgadmin.org/download/
+
+
+
+
+Definitions:
+Azure - Our global cloud hypervisor and platform
+Putty - Connects to any linux machine on ssh (port 22) to remote control the machine.
+RDP - Connects to any windows machine (default port 3389) to remote control the machine
